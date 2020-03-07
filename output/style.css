@@ -1,0 +1,11 @@
+body {
+    background-color: rgb(105,105,105);
+}
+
+.container {
+    border : solid thick #28a745;
+    color : red;
+    background-color: whitesmoke;
+    padding-left: auto;
+    padding-right: auto;
+}
