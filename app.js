@@ -11,8 +11,6 @@ const util = require("util")
 
 const fileWriter = util.promisify(fs.writeFile)
 
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
 //first call is to the asyn init function
 init()
 
@@ -37,11 +35,8 @@ function getManagerDetails() {
             type: "input",
             message: "What is your office number?",
             name: "officeNumber"
-        }])
-    // ]).then(input => {
-    // id++;
-    // return new Manager(input.name, id, input.email, input.officeNumber)
-    // })
+        }
+    ])
 }
 
 //second called within init, reponsible for only one question/answer
@@ -52,12 +47,11 @@ function getEmployeeRole() {
             message: "What kind of employee would you like to add?",
             choices: ["Engineer", "Intern", "I do not want to add any/anymore employees"],
             name: "employeePosition",
-        }).then(emp => emp.employeePosition)
+        }).then(emp => emp.employeePosition)//TODO probably do not need
 }
 
 function employeeDetails(role) {
     //switch statement will deviate into a question relevant to the employee's role
-
     questions = [{
         type: "input",
         message: `What is the ${role}'s name?`,
@@ -68,7 +62,7 @@ function employeeDetails(role) {
         message: "What is their email?",
         name: "email"
     }]
-    
+
     switch (role) {
         case "Engineer":
             questions.push(
@@ -77,7 +71,7 @@ function employeeDetails(role) {
                     message: "What is their GitHub username?",
                     name: "gitUsername"
                 })
-                break
+            break
         case "Intern":
             questions.push(
                 {
@@ -85,13 +79,13 @@ function employeeDetails(role) {
                     message: "What school does this intern go to?",
                     name: "internSchool"
                 })
-                break
-            }
+            break
+    }
     return inquirer.prompt(questions)
 }
 
 function writeHTML(fileName, data) {
-    fileWriter(fileName, data)
+    return fileWriter(fileName, data)
 }
 
 async function init() {
@@ -112,35 +106,12 @@ async function init() {
                 role = await getEmployeeRole()
             }
         }
-
         const data = await render(employees)
 
         // await writeHTML(render)
-        writeHTML(outputPath, data)
+        await writeHTML(outputPath, data)
 
     } catch (err) {
         if (err) throw new Error("Unfortanetly, I'm not just here to say hi, errors have arisen")
     }
-
-    // console.log(employees)
 }
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an 
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work!
