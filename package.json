@@ -22,6 +22,7 @@
   "homepage": "https://github.com/stevetrilogy/unit10hw#readme",
   "dependencies": {
     "inquirer": "^6.3.1",
+    "node-notifier": "^8.0.1",
     "y18n": "^4.0.1"
   },
   "devDependencies": {
